@@ -17,6 +17,7 @@ import { PermissionsAndroid } from 'react-native';
 import { useEffect } from "react";
 import WifiManager from "react-native-wifi-reborn";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Profile() {
@@ -26,9 +27,29 @@ export default function Profile() {
 
     const navigation = useNavigation<any>();
 
+    const handleLogout = async () => {
+        // Clear the session token from AsyncStorage
+        await AsyncStorage.removeItem('email');
+        // Navigate back to the login screen
+        Alert.alert("User Logged out Successfully")
+        navigation.navigate('Login');
+      };
+
+      const checkLoggedIn = async () => {
+        // Check if the session token exists in AsyncStorage
+        const sessionToken = await AsyncStorage.getItem('email');
+        if (!sessionToken) {
+          // If not logged in, navigate to the login screen
+          navigation.navigate('Login');
+        }
+      };
 
 
 
+    useEffect(() => {
+        checkLoggedIn()
+        
+    }, []);
     
 
 
@@ -37,7 +58,7 @@ export default function Profile() {
 
             <StatusBar />
             <Text style={styles.logotext}>GoEase Profile</Text>
-            
+            <Button title="Logout" onPress={handleLogout} />
      
 
         </View>

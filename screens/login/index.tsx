@@ -8,22 +8,43 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Login() {
     const navigation = useNavigation<any>();
-    const handleLogin = () => {
-        // Perform any logic or actions before navigating (if needed)
-        // Then, navigate to the "AnotherScreen"
-        console.log("pressed")
-        navigation.navigate('Home');
-      };
+   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+  const [errorMessage, setErrorMessage] = useState('');
+  const handleLogin = () => {
+    fetch('https://6b31-223-236-147-175.ngrok.io/student/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => response.json())
+    
+      .then(async (data) => {
+        if (data.success && data.data && data.data.status === 'SUCCESS') {
+          await AsyncStorage.setItem('email', data.data.email);
+          navigation.navigate('Home'); // Or navigation.navigate('Home');
+        } else {
+          setErrorMessage(data.message || 'Login failed. Please try again.');
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+        Alert.alert('An error occurred. Please try again later.');
+      });
+
+    
+  };
   return (
     <View style={styles.container}>
     

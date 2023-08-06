@@ -10,10 +10,27 @@ import {
 import { RNCamera } from 'react-native-camera'
 import { useNavigation } from '@react-navigation/native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
 
 
 class Scan extends Component {
     
+  checkLoggedIn = async () => {
+    // Check if the session token exists in AsyncStorage
+    const sessionToken = await AsyncStorage.getItem('email');
+    if (!sessionToken) {
+      // If not logged in, navigate to the login screen
+      this.props.navigation.navigate('Login');
+    }
+  };
+
+  componentDidMount() {
+    this.checkLoggedIn();
+  }
+
     onSuccess = e => {
         console.log("running")
        

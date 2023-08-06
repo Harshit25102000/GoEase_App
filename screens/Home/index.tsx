@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PermissionsAndroid } from 'react-native';
 import { useEffect } from "react";
 import WifiManager from "react-native-wifi-reborn";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -108,11 +108,19 @@ export default function Home() {
 
 
 
-
+    const checkLoggedIn = async () => {
+        // Check if the session token exists in AsyncStorage
+        const sessionToken = await AsyncStorage.getItem('email');
+        if (!sessionToken) {
+          // If not logged in, navigate to the login screen
+          navigation.navigate('Login');
+        }
+      };
 
 
 
     useEffect(() => {
+        checkLoggedIn()
         requestWifiPermission()
     }, []);
 
