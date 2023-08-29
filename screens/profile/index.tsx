@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import WifiManager from "react-native-wifi-reborn";
 import { ScrollView } from "react-native-gesture-handler";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Profile() {
@@ -27,36 +28,37 @@ export default function Profile() {
 
     const navigation = useNavigation<any>();
 
+    const handleLogout = async () => {
+        // Clear the session token from AsyncStorage
+        await AsyncStorage.removeItem('email');
+        // Navigate back to the login screen
+        Alert.alert("User Logged out Successfully")
+        navigation.navigate('Login');
+      };
+
+      const checkLoggedIn = async () => {
+        // Check if the session token exists in AsyncStorage
+        const sessionToken = await AsyncStorage.getItem('email');
+        if (!sessionToken) {
+          // If not logged in, navigate to the login screen
+          navigation.navigate('Login');
+        }
+      };
 
 
 
+    useEffect(() => {
+        checkLoggedIn()
+        
+    }, []);
     
 
 
     return (
-        <View>
-            <ScrollView>
-                <StatusBar />
-                {/* <Text style={styles.logotext}>GoEase Profile</Text> */}
-                <View style={styles.upper_part}></View>
-                <TouchableOpacity>
-                   
-                </TouchableOpacity>
-                <View style={{alignItems: "center"}}>
-                    <Image source = {{ uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/graham.jpg'}} style={styles.image}></Image>
-                    <Text style={styles.text}>Paul Graham</Text>
-                </View>
-                <View style={styles.details_container}>
-                    <Text style={styles.details}>PRN: 20070122099</Text>
-                </View>
-                <View style={styles.details_container}>
-                    <Text style={styles.details}>Div: CSA</Text>
-                </View>
-                <View style={styles.details_container}>
-                    <Text style={styles.details}>Batch: 2020-2024</Text>
-                </View>
-                <View style={styles.last_container}></View>
-            </ScrollView>
+        <View style={styles.container}>
+
+            <StatusBar />
+            <Text style={styles.logotext}>GoEase Profile</Text>
             
      
 

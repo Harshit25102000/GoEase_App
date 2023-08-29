@@ -65,6 +65,11 @@ function App(): JSX.Element {
     <NavigationContainer>
     <Stack.Navigator>
       {/* Login and Signup screens */}
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Scanner" component={Scanner} />
+  
+
       <Stack.Screen
           name="Home"
           component={TabNav}
