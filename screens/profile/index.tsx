@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PermissionsAndroid } from 'react-native';
 import { useEffect } from "react";
 import WifiManager from "react-native-wifi-reborn";
-import { BACKEND_URL } from '../../config';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -58,7 +58,7 @@ export default function Profile() {
 
             <StatusBar />
             <Text style={styles.logotext}>GoEase Profile</Text>
-            <Button title="Logout" onPress={handleLogout} />
+            
      
 
         </View>
@@ -72,15 +72,63 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
   
-    logotext: {
-        marginBottom: 50,
-        color: "black",
-        height: 50,
+    text: {
+        
         fontWeight: "bold",
-        fontSize: 40,
+        fontSize: 25,
+        color:"black",
+        padding:10,
     },
     hometext:{
         color:"black",
 
+    },
+
+    upper_part:{
+        padding:10,
+        width: "100%",
+        backgroundColor: "black",
+        height: 150,
+    },
+
+    image:{
+        // alignItems: "center",
+        width:140,
+        height:140,
+        borderRadius:100,
+        marginTop:-70,
+    },
+
+    details_container:{
+        alignSelf:"center",
+        justifyContent:"center",
+        flexDirection:"row",
+        width:"90%",
+        padding:20,
+        paddingBottom:22,
+        borderRadius:10,
+        shadowOpacity:80,
+        elevation:15,
+        backgroundColor:"#fff",
+        marginTop:20,
+    },
+
+    details:{
+        color:"black",
+        fontSize:17,
+    },
+
+    last_container:{
+        alignSelf:"center",
+        justifyContent:"center",
+        flexDirection:"row",
+        width:"90%",
+        padding:20,
+        paddingBottom:22,
+        borderRadius:10,
+        shadowOpacity:80,
+        // elevation:15,
+        // backgroundColor:"#fff",
+        marginTop:20,
     }
 });

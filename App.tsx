@@ -35,6 +35,7 @@ import SignupScreen from './screens/signup';
 import HomeScreen from './screens/Home';
 import ProfileScreen from './screens/profile';
 import Scanner from './screens/scanner';
+import messages from './screens/messages';
 
 const TabNav = () => (
   <Tab.Navigator 
@@ -48,6 +49,8 @@ const TabNav = () => (
   }}>
   <Tab.Screen name="Home" component={HomeScreen} options={{tabBarHideOnKeyboard: true}}/>
   <Tab.Screen name="Profile" component={ProfileScreen} options={{tabBarHideOnKeyboard: true}}/>
+  <Tab.Screen name="Messages" component={messages} options={{tabBarHideOnKeyboard: true}}/>
+
 </Tab.Navigator>
 );
 
@@ -62,11 +65,9 @@ function App(): JSX.Element {
     <NavigationContainer>
     <Stack.Navigator>
       {/* Login and Signup screens */}
-      
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Scanner" component={Scanner} />
-      
   
 
       <Stack.Screen
@@ -74,6 +75,13 @@ function App(): JSX.Element {
           component={TabNav}
           options={{ headerShown: false }}
         />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Scanner" component={Scanner} />
+      <Stack.Screen name="Messages" component={messages} />
+  
+
+      
 
      
       
