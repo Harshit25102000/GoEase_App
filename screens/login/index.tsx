@@ -12,24 +12,27 @@ import {
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { BACKEND_URL } from '../../config';
 
 export default function Login() {
     const navigation = useNavigation<any>();
-   
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
   const handleLogin = () => {
-    fetch('https://6b31-223-236-147-175.ngrok.io/student/login', {
+    fetch(BACKEND_URL+'/student/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
+  
     })
-      .then((response) => response.json())
-    
+      .then((response) => {
+        console.log(response)
+        return response.json();
+      })
       .then(async (data) => {
         if (data.success && data.data && data.data.status === 'SUCCESS') {
           await AsyncStorage.setItem('email', data.data.email);

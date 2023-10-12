@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-
+import { BACKEND_URL } from '../../config';
 
 
 export default function Signup() {
@@ -27,7 +27,7 @@ export default function Signup() {
   const navigation = useNavigation<any>();
   const handleSignup = () => {
     
-    fetch('https://6b31-223-236-147-175.ngrok.io/student/signup', {
+    fetch(BACKEND_URL+'/student/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

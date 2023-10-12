@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PermissionsAndroid } from 'react-native';
 import { useEffect } from "react";
 import WifiManager from "react-native-wifi-reborn";
-
+import { BACKEND_URL } from '../../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
