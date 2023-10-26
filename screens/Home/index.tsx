@@ -16,8 +16,8 @@ import { PermissionsAndroid } from 'react-native';
 import { useEffect } from "react";
 import WifiManager from "react-native-wifi-reborn";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+import { auth_ssid } from '../../config';
+import DeviceInfo from 'react-native-device-info';
 
 export default function Home() {
     const navigation = useNavigation<any>();
@@ -26,6 +26,7 @@ export default function Home() {
     const [bssid, setBssid] = useState("");
     const [password, setPassword] = useState("");
     const [wifistatus, setWifistatus] = useState("");
+    const [deviceID,setDeviceID]=useState("");
     const requestWifiPermission = async () => {
         try {
 
@@ -95,7 +96,9 @@ export default function Home() {
                     }
                 );
 
-                
+                DeviceInfo.getUniqueId().then((mac) => {
+                    setDeviceID(mac)
+                   });
 
 
             }
@@ -117,12 +120,28 @@ export default function Home() {
         }
       };
 
-
+    
+      
 
     useEffect(() => {
-        checkLoggedIn()
         requestWifiPermission()
+        
+        checkLoggedIn()
+        
+  
+       
+      
     }, []);
+
+    const openScanner=async()=>{
+        await AsyncStorage.setItem('ssid', ssid);
+        await AsyncStorage.setItem('bssid', bssid);
+        await AsyncStorage.setItem('deviceID', deviceID);
+        console.log(ssid)
+        console.log(auth_ssid)
+        navigation.navigate('Scanner')}
+    
+
 
 
 
@@ -136,9 +155,9 @@ export default function Home() {
             <Text style={styles.hometext}>Connection Status - {wifistatus}</Text>
             <Text style={styles.hometext}>SSID - {ssid}</Text>
             <Text style={styles.hometext}>BSSID - {bssid}</Text>
-                      
+            <Text style={styles.hometext}>Unique Device ID - {deviceID}</Text>         
             <Button
- onPress={() => navigation.navigate('Scanner')}
+ onPress={openScanner}
   title="Open Scanner"
   color="#841584"
   
